@@ -11,6 +11,7 @@ package main;
  */
 import java.io.IOException;
 import java.util.List;
+import java.util.Arrays;
 import org.apache.mxnet.javaapi.Context;
 import org.apache.mxnet.javaapi.DType;
 import org.apache.mxnet.javaapi.NDArray;
@@ -32,18 +33,18 @@ public class Chapter2 {
         System.out.println("x: " + array.toString());
         System.out.println("x Sizr: " + array.size());
         System.out.println("x Shape: " + array.shape());
-        int[] x = {3, 4};
-        array = array.reshape(x);
+
+        array = array.reshape(new int[]{3, 4});
         System.out.println("x ReShaped to 3,4: " + array.toString());
         //array = NDArray.arange(0, 12, 1, 1, context, DType.Int32());
         System.out.println("x: " + array.toString());
-        int[] y = {-1, 4};
-        array = array.reshape(y);
+
+        array = array.reshape(new int[]{-1, 4});
         System.out.println("x ReShaped to using -1: " + array.toString());
         System.out.println("---");
 
         random_normalParam randomParam = new random_normalParam();
-        randomParam.setShape(new Shape(x));
+        randomParam.setShape(new Shape(new int[]{3, 4}));
         randomParam.setScale(Float.valueOf(1));
         randomParam.setLoc(Float.valueOf(0));
         NDArray[] randomArray = NDArray.random_normal(randomParam);
@@ -58,17 +59,17 @@ public class Chapter2 {
         System.out.println("---");
         NDArray ones = NDArray.ones(context, List.of(2, 3, 4));
         NDArray zeros = NDArray.zeros(context, List.of(2, 3, 4));
-        System.out.println("Ones: " + ones.toString());
+        System.out.println("Ones: " + Arrays.toString(ones.toArray()));
         System.out.println("---");
-        System.out.println("Zeros: " + zeros.toString());
+        System.out.println("Zeros: " + Arrays.toString(zeros.toArray()));
 
         System.out.println((char) 27 + "[32m" + "-Indexing and Slicing-" + (char) 27 + "[0m");
-        System.out.println("Array: " + array.toString());
+        System.out.println("Array: " + Arrays.toString(array.toArray()));
 
         NDArray array_1to3Slice = array.slice(1, 3);
         NDArray array_Neg1 = array.slice(1, 3);
-        System.out.println("Array sliced 1_3" + array_1to3Slice.toString());
-        System.out.println("Array sliced -1" + array_Neg1.toString());
+        System.out.println("Array sliced 1_3" + Arrays.toString(array_1to3Slice.toArray()));
+        System.out.println("Array sliced -1" + Arrays.toString(array_Neg1.toArray()));
 
         System.out.println("---");
         System.out.println("---");
@@ -76,18 +77,43 @@ public class Chapter2 {
 
         NDArray expArray = null;
         expArray = array.copy();
-        System.err.println("Exp Array" + expArray.toString());
+
         NDArray.exp(array, expArray);
-        System.err.println("Exp Array" + expArray.toString());
+        System.err.println("Exp Array: " + Arrays.toString(expArray.toArray()));
 
         NDArray xArray = new NDArray(new float[]{1, 2, 4, 8}, new Shape(new int[]{4}), context);
 
         NDArray yArray = new NDArray(new float[]{2, 2, 2, 2}, new Shape(new int[]{4}), context);
 
-        System.err.println("X Array" + xArray.toString());
-        System.err.println("Y Array" + yArray.toString());
-        
-        
+        System.err.println("X Array: " + Arrays.toString(xArray.toArray()));
+        System.err.println("Y Array: " + Arrays.toString(yArray.toArray()));
+
+        System.out.println("X+Y: " + Arrays.toString(xArray.add(yArray).toArray()));
+        System.out.println("X-Y: " + Arrays.toString(xArray.subtract(yArray).toArray()));
+        System.out.println("X*Y: " + Arrays.toString(xArray.multiply(yArray).toArray()));
+        System.out.println("X/Y: " + Arrays.toString(xArray.div(yArray).toArray()));
+        System.out.println("X**Y: " + Arrays.toString(xArray.pow(yArray).toArray()));
+
+        System.out.println("-concatenate-");
+
+        NDArray x = NDArray.arange(0, 12, 1, 1, context, DType.Float32());
+        x = x.reshape(new int[]{3, 4});
+
+        NDArray y = new NDArray(new float[]{2, 1, 4, 3, 1, 2, 3, 4, 4, 3, 2, 1}, new Shape(new int[]{3, 4,}), context);
+        System.out.println("X: " + x.toString());
+        System.out.println("Y: " + y.toString());
+
+        //axis Zero is x axis 
+        NDArray reuslt = NDArray.empty(context, new int[]{6, 4});
+        NDArray.concat(new NDArray[]{x, y}, 2, 0, reuslt);
+
+        System.out.println("reuslt contact aixs 0: " + reuslt.toString());
+
+        reuslt = NDArray.empty(context, new int[]{3, 8});
+        NDArray.concat(new NDArray[]{x, y}, 2, 1, reuslt);
+
+        System.out.println("reuslt contact aixs 1: " + reuslt.toString());
+
         System.exit(0);
 
     }
