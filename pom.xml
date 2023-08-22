@@ -7,7 +7,7 @@
         
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-       <!-- <exec.mainClass>main.ImageClassificationPredict</exec.mainClass>-->
+        <!-- <exec.mainClass>main.ImageClassificationPredict</exec.mainClass>-->
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
@@ -39,6 +39,14 @@
             <artifactId>mkl-platform-redist</artifactId>
             <version>2023.1-1.5.10-SNAPSHOT</version>
         </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/tech.tablesaw/tablesaw-core -->
+        <dependency>
+            <groupId>tech.tablesaw</groupId>
+            <artifactId>tablesaw-core</artifactId>
+            <version>0.43.1</version>
+        </dependency>
+
 
     </dependencies>
     
@@ -51,7 +59,7 @@
                 <version>3.0.0</version>
                 <configuration>
                     <includePluginDependencies>true</includePluginDependencies>
-                  <mainClass>main.Chapter2</mainClass>
+                    <mainClass>main.Chapter2</mainClass>
                 </configuration>
             </plugin>
         </plugins>

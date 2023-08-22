@@ -17,9 +17,10 @@ import org.apache.mxnet.javaapi.DType;
 import org.apache.mxnet.javaapi.NDArray;
 import org.apache.mxnet.javaapi.Shape;
 import org.apache.mxnet.javaapi.random_normalParam;
+import org.apache.mxnet.javaapi.sumParam;
 import org.bytedeco.javacpp.Loader;
 
-public class Chapter2 {
+public class Chapter_2_1 {
 
     public static void main(String[] args) throws IOException {
         Loader.load(org.bytedeco.mxnet.global.mxnet.class);
@@ -27,7 +28,7 @@ public class Chapter2 {
         Context context = Context.cpu();
 
         System.out.println((char) 27 + "[32m" + "-Getting Started-" + (char) 27 + "[0m");
-
+        //args:(start value , end value , step ,repeat , context, and type) 
         NDArray array = NDArray.arange(0, 12, 1, 1, context, DType.Int32());
 
         System.out.println("x: " + array.toString());
@@ -103,17 +104,49 @@ public class Chapter2 {
         System.out.println("X: " + x.toString());
         System.out.println("Y: " + y.toString());
 
-        //axis Zero is x axis 
+        //axis Zero is x axis One is the Y axis
+        //arg(the list of arrays , numbe of array in the list axis and output) 
         NDArray reuslt = NDArray.empty(context, new int[]{6, 4});
         NDArray.concat(new NDArray[]{x, y}, 2, 0, reuslt);
 
         System.out.println("reuslt contact aixs 0: " + reuslt.toString());
-
         reuslt = NDArray.empty(context, new int[]{3, 8});
         NDArray.concat(new NDArray[]{x, y}, 2, 1, reuslt);
-
         System.out.println("reuslt contact aixs 1: " + reuslt.toString());
 
+        System.out.println("X==y" + NDArray.equal(x, y).toString());
+
+        sumParam p = new sumParam(x);
+
+        System.out.println("X Sum: " + Arrays.toString(NDArray.sum(p)[0].toArray()));
+
+        System.out.println((char) 27 + "[32m" + "-1.4. Broadcasting-" + (char) 27 + "[0m");
+
+        NDArray a = NDArray.arange(0, 3, 1, 1, context, DType.Int32());
+        a = a.reshape(new int[]{3, 1});
+        System.out.println("a:" + a.toString());
+        NDArray b = NDArray.arange(0, 2, 1, 1, context, DType.Int32());
+        b = b.reshape(new int[]{1, 2});
+        System.out.println("b:" + b.toString());
+        System.out.println("a+b:" + NDArray.broadcast_add(a, b, null)[0].toString());
+
+        ///1.5. Saving Memory 
+        //I dont think it is meant for us here for us here
+        System.err.println("---add and addinplace---");
+
+        a = NDArray.arange(0, 3, 1, 1, context, DType.Int32());
+        b = NDArray.arange(1, 4, 1, 1, context, DType.Int32());
+
+        System.out.println("a:" + a.toString());
+        //Save Memoery by using addinplace
+        NDArray c = a.add(b);
+        System.err.println("a != c" +Arrays.toString(NDArray.equal(a, c).toArray()));
+        a = NDArray.arange(0, 3, 1, 1, context, DType.Int32());
+        b = NDArray.arange(1, 4, 1, 1, context, DType.Int32());
+        c = a.addInplace(b);
+        System.err.println("a == c" +Arrays.toString(NDArray.equal(a, c).toArray()));
+        
+        
         System.exit(0);
 
     }
