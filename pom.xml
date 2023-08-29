@@ -59,7 +59,7 @@
                 <version>3.0.0</version>
                 <configuration>
                     <includePluginDependencies>true</includePluginDependencies>
-                    <mainClass>main.Chapter2</mainClass>
+                    <mainClass>main.Chapter_2_2</mainClass>
                 </configuration>
             </plugin>
         </plugins>

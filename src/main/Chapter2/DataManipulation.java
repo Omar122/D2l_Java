@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package main;
+package main.Chapter2;
 
 /**
  *
@@ -20,7 +20,7 @@ import org.apache.mxnet.javaapi.random_normalParam;
 import org.apache.mxnet.javaapi.sumParam;
 import org.bytedeco.javacpp.Loader;
 
-public class Chapter_2_1 {
+public class DataManipulation {
 
     public static void main(String[] args) throws IOException {
         Loader.load(org.bytedeco.mxnet.global.mxnet.class);
