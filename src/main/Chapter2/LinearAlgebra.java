@@ -10,6 +10,8 @@ import org.apache.mxnet.javaapi.Context;
 import org.apache.mxnet.javaapi.DType;
 import org.apache.mxnet.javaapi.NDArray;
 import org.apache.mxnet.javaapi.Shape;
+import org.apache.mxnet.javaapi.cumsumParam;
+import org.apache.mxnet.javaapi.dotParam;
 import org.apache.mxnet.javaapi.meanParam;
 import org.apache.mxnet.javaapi.sumParam;
 import org.apache.mxnet.javaapi.sum_axisParam;
@@ -57,27 +59,26 @@ public class LinearAlgebra {
         //Basic Properties of Tensor Arithmetic
         NDArray a = NDArray.arange(0, 6, 1, 1, context, DType.Float64());
         a = a.reshape(new int[]{2, 3});
-        System.out.println("Array A:" + a.toString());
+        System.out.println("Matrix A:" + a.toString());
         NDArray b = null;
         b = a.copy();
-        System.out.println("Array B:" + b.toString());
+        System.out.println("Matrix B:" + b.toString());
         System.out.println("X+Y: " + a.add(b).toString());
-        System.out.println("X+Y: " + a.multiply(b).toString());
+        System.out.println("X*Y: " + a.multiply(b).toString());
         System.out.println("===");
         //Tensor * scalar ;
         System.out.println("2+Tensor: " + tensor.add(2).toString());
         System.out.println("2*Tensor: " + tensor.multiply(2).shape().toString());
         System.out.println("===");
-        
-        //Reduction
 
-        sumParam p = new sumParam(vector);
+        //Reduction
+        sumParam sumParam = new sumParam(vector);
         System.out.println("Vectors:" + Arrays.toString(vector.toArray()));
-        System.out.println("vertor Sum: " + Arrays.toString(NDArray.sum(p)[0].toArray()));
+        System.out.println("vertor Sum: " + Arrays.toString(NDArray.sum(sumParam)[0].toArray()));
         System.out.println("===");
-        p = new sumParam(a);
+        sumParam = new sumParam(a);
         System.out.println("Matrix Shape:" + Arrays.toString(a.shape().toArray()));
-        System.out.println("Matrix Sum: " + Arrays.toString(NDArray.sum(p)[0].toArray()));
+        System.out.println("Matrix Sum: " + Arrays.toString(NDArray.sum(sumParam)[0].toArray()));
         sum_axisParam p1 = new sum_axisParam(a);
         System.out.println("===");
         p1.setAxis(new Shape(List.of(0)));
@@ -86,12 +87,12 @@ public class LinearAlgebra {
         p1.setAxis(new Shape(List.of(1)));
         System.out.println("Matrix Sum axis one Shape: " + Arrays.toString(NDArray.sum_axis(p1)[0].shape().toArray()));
         p1.setAxis(new Shape(List.of(0, 1)));
-        System.out.println("Matrix Sum axis one and Zero == array.Sum : " + NDArray.equal(NDArray.sum_axis(p1)[0], a.sum(p)[0]).toString());
+        System.out.println("Matrix Sum axis one and Zero == array.Sum : " + NDArray.equal(NDArray.sum_axis(p1)[0], a.sum(sumParam)[0]).toString());
         System.out.println("===");
         meanParam meanParam = new meanParam(a);
         //Matrix Mean == Matrix Sum/Size
         System.out.println("Matrix Mean" + NDArray.mean(meanParam)[0].toString());
-        System.out.println("Matrixc Sum/size" + NDArray.sum(p)[0].div(a.size()).toString());
+        System.out.println("Matrixc Sum/size" + NDArray.sum(sumParam)[0].div(a.size()).toString());
         //Matrix Mean == Matrix Sum/Size // Using 0 Axis
         meanParam.setAxis(new Shape(List.of(0)));
         p1.setAxis(new Shape(List.of(0)));
@@ -99,10 +100,28 @@ public class LinearAlgebra {
         System.out.println("Matrix Mean axis 0:" + NDArray.mean(meanParam)[0].toString());
         System.out.println("Matrixc Sum/size axis 0:" + NDArray.sum_axis(p1)[0].div(a.shape().toArray()[0]).toString());
         System.out.println("===");
-        //Non-Reduction Sum
-         
+        //Non-Reduction Sum 
+        p1.setAxis(new Shape(new int[]{1}));
+        p1.setKeepdims(true);
+        System.out.println("Sum a with keepdims True allong axis 0: " + NDArray.sum_axis(p1)[0].toString());
+        System.out.println("Sum a / Sum Sof A axis 1: //Also known as boardcast" + NDArray.broadcast_div(a, NDArray.sum_axis(p1)[0], null)[0].toString());
+        cumsumParam c = new cumsumParam(a);
+        c.setAxis(0);
+        System.out.println("Cumulative sum: " + NDArray.cumsum(c)[0].toString());
+        System.out.println("===");
+        //Dot Products
+        y = NDArray.ones(new Shape( List.of(3)),context,DType.Float64());
+        x = NDArray.arange(0, 3, 1, 1, context, DType.Float64());
+        System.out.println("Y: " + y.toString());
+        System.out.println("X: " + x.toString());
+        dotParam dtprm = new dotParam(y, x);
+        System.out.println("y . x : " + NDArray.dot(dtprm)[0].toString());
+        sumParam = new sumParam(y.multiply(x));
+        System.out.println("Sum of x * Y: "+NDArray.sum(sumParam)[0].toString());
         
-
+         //Matrix–Vector Products
+        
+        
     }
 
 }
