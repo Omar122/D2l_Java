@@ -7,9 +7,9 @@
         
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- <exec.mainClass>main.ImageClassificationPredict</exec.mainClass>-->
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+       
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
@@ -59,7 +59,7 @@
                 <version>3.0.0</version>
                 <configuration>
                     <includePluginDependencies>true</includePluginDependencies>
-                    <mainClass>main.Chapter_2_2</mainClass>
+                    <mainClass>main.Chapter2.LinearAlgebra</mainClass>
                 </configuration>
             </plugin>
         </plugins>
@@ -78,5 +78,5 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </pluginRepository>
     </pluginRepositories>
-    <name>ImageClassificationPredict</name>
+    
 </project>
