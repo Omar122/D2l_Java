@@ -7,7 +7,7 @@
         
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-       
+        <maven.compiler.release>17</maven.compiler.release>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
@@ -46,6 +46,14 @@
             <artifactId>tablesaw-core</artifactId>
             <version>0.43.1</version>
         </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/tech.tablesaw/tablesaw-jsplot -->
+        <dependency>
+            <groupId>tech.tablesaw</groupId>
+            <artifactId>tablesaw-jsplot</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
 
 
     </dependencies>
@@ -59,9 +67,10 @@
                 <version>3.0.0</version>
                 <configuration>
                     <includePluginDependencies>true</includePluginDependencies>
-                    <mainClass>main.Chapter2.LinearAlgebra</mainClass>
+                    <mainClass>main.Chapter2.Calculus</mainClass>
                 </configuration>
             </plugin>
+            
         </plugins>
     </build>
    
