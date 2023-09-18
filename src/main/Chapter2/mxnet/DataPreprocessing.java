@@ -1,4 +1,4 @@
-package main.Chapter2;
+package main.Chapter2.mxnet;
 
 import java.io.File;
 import java.io.FileWriter;

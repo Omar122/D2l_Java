@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package main.Chapter2;
+package main.Chapter2.mxnet;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.apache.mxnet.javaapi.normParam;
 public class LinearAlgebra {
     
     public static void main(String[] args) {
-        //Scalaras 
+     
         Context context = Context.cpu();
         NDArray x = new NDArray(new float[]{3}, new Shape(new int[]{1}), context);
         NDArray y = new NDArray(new float[]{2}, new Shape(new int[]{1}), context);
